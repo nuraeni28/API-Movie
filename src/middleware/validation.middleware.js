@@ -15,17 +15,7 @@ exports.runValidation = (req, res, next) => {
   
   exports.validationRegister = [
     check('name', 'name cannot empty').notEmpty(),
-    check('username').notEmpty().withMessage('username cannot empty')
-    .custom(async (value) => {
-      try {
-        const username = await User.findOne({ where: { username: value } });
-        if (username) {
-          return Promise.reject('username is also exist');
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    }),
+    check('username').notEmpty().withMessage('username cannot empty'),
     check('password').notEmpty().withMessage('password cannot empty')
     .isLength({ min: 8 })
     .withMessage('password must be at last 8 characters')

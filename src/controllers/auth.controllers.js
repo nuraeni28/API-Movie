@@ -18,13 +18,13 @@ const AddUser =  async (req, res)=>{
                         password: hash,
                         token:req.body.token
                     }
-                
+
                     models.User.create(user).then(result => {
-                        res.status(201).json({
+                        res.status(201).json({status:201,
                             message: "User created successfully",
                         });
                     }).catch(error => {
-                        res.status(500).json({
+                        res.status(500).json({status:500,
                             message: "Something went wrong!",
                         });
                     });
@@ -42,17 +42,17 @@ const AddUser =  async (req, res)=>{
 const Login = async (req, res)=>{
     models.User.findOne({where:{username: req.body.username}}).then(user => {
         if(user === null){
-            res.status(401).json({
+            res.status(401).json({status:401,
                 message: "Invalid credentials!",
             });
         }else{
             bcryptjs.compare(req.body.password, user.password, function(err, result){
                 if(result){  
-                    res.status(200).json({
+                    res.status(200).json({status:200,
                         message: "Authentication successful!"
                     });
                 }else{
-                    res.status(401).json({
+                    res.status(401).json({status:401,
                         message: "Invalid credentials!",
                     });
                 }
